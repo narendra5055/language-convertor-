@@ -1,38 +1,120 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content=
-        "width=device-width, initial-scale=1.0">
-    <title>Text to Speech Converter</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text-to-Speech and Translation Converter</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Custom Stylesheet -->
     <link rel="stylesheet" href="style.css">
 </head>
-
-<body>
+<body class="antialiased">
     <div class="container">
-        <div class="app-container">
-            <div class="headings-container">
-                <h1>Text to Speech Converter</h1>
-                <h3>Enter Text and Convert into Speech</h3>
+        <h1 class="text-4xl font-extrabold text-gray-900 mb-4 text-center">
+            <i class="fas fa-language text-blue-600 mr-3"></i>Translate & Speak
+        </h1>
+        <p class="text-center text-gray-600 mb-8">Type, translate, and listen to your text in multiple languages.</p>
+
+        <!-- Original Text Input Section -->
+        <div class="mb-6">
+            <label for="textInput" class="block text-gray-700 text-base font-semibold mb-2">Enter Text:</label>
+            <textarea id="textInput"
+                      class="w-full p-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-3 focus:ring-blue-400 focus:border-transparent transition duration-200"
+                      placeholder="Enter text to convert into speech..."></textarea>
+        </div>
+
+        <!-- Translation Section -->
+        <div class="section-separator"></div>
+        <h2 class="text-2xl font-bold text-gray-800 mb-4 text-center">Translation Options</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="input-group">
+                <label for="translateLanguageSelect" class="block text-gray-700 text-base font-semibold mb-2">Translate To:</label>
+                <select id="translateLanguageSelect"
+                        class="w-full p-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-3 focus:ring-green-400 focus:border-transparent transition duration-200">
+                    <option value="en-US">English (US)</option>
+                    <option value="en-IN">English (India)</option>
+                    <option value="hi-IN">Hindi</option>
+                    <option value="mr-IN">Marathi</option>
+                    <option value="ta-IN">Tamil</option>
+                    <option value="ra-IN">Rajasthani (Fallback to Hindi)</option>
+                    <option value="bh-IN">Bhojpuri (Fallback to Hindi)</option>
+                </select>
             </div>
-
-            <div class="interaction-container">
-                <textarea id="textToConvert" 
-                    placeholder="Enter text to convert into speech..." 
-                    id="" cols="35" rows="10" 
-                    class="text-control"></textarea>
-
-                <p class="error-para"></p>
-
-                <button class="btn" id="convertBtn">
-                    Play Converted Sound
-                </button>
+            <div class="input-group">
+                <label for="translatedTextInput" class="block text-gray-700 text-base font-semibold mb-2">Translated Text:</label>
+                <textarea id="translatedTextInput"
+                          class="w-full p-4 border border-gray-300 rounded-xl bg-gray-50 focus:outline-none focus:ring-3 focus:ring-green-400 focus:border-transparent transition duration-200"
+                          placeholder="Translated text will appear here..." readonly></textarea>
             </div>
         </div>
+
+        <button id="translateButton"
+                class="w-full flex items-center justify-center bg-gradient-to-r from-green-500 to-teal-600 text-white font-bold py-4 px-8 rounded-xl shadow-lg hover:from-green-600 hover:to-teal-700 focus:outline-none focus:ring-4 focus:ring-green-300 focus:ring-opacity-75 transition duration-300 ease-in-out mb-6">
+            <i class="fas fa-exchange-alt mr-3"></i>
+            <span>Translate Text</span>
+        </button>
+
+        <div class="section-separator"></div>
+        <h2 class="text-2xl font-bold text-gray-800 mb-4 text-center">Speech Options</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="input-group">
+                <label for="languageSelect" class="block text-gray-700 text-base font-semibold mb-2">Select Speech Language:</label>
+                <select id="languageSelect"
+                        class="w-full p-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-3 focus:ring-blue-400 focus:border-transparent transition duration-200">
+                    <option value="en-US">English (US)</option>
+                    <option value="en-IN">English (India)</option>
+                    <option value="hi-IN">Hindi</option>
+                    <option value="mr-IN">Marathi</option>
+                    <option value="ta-IN">Tamil</option>
+                    <option value="ra-IN">Rajasthani (Fallback to Hindi)</option>
+                    <option value="bh-IN">Bhojpuri (Fallback to Hindi)</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label class="block text-gray-700 text-base font-semibold mb-2">Select Voice Gender:</label>
+                <div class="flex items-center space-x-6 p-4 border border-gray-300 rounded-xl h-full bg-white">
+                    <label class="inline-flex items-center cursor-pointer">
+                        <input type="radio" name="voiceGender" value="male" class="form-radio text-blue-600 h-5 w-5" checked>
+                        <span class="ml-3 text-gray-800 font-medium">Male</span>
+                    </label>
+                    <label class="inline-flex items-center cursor-pointer">
+                        <input type="radio" name="voiceGender" value="female" class="form-radio text-pink-600 h-5 w-5">
+                        <span class="ml-3 text-gray-800 font-medium">Female</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 mb-6">
+            <button id="speakButton"
+                    class="flex-1 flex items-center justify-center bg-gradient-to-r from-blue-600 to-indigo-700 text-white font-bold py-4 px-8 rounded-xl shadow-lg hover:from-blue-700 hover:to-indigo-800 focus:outline-none focus:ring-4 focus:ring-blue-300 focus:ring-opacity-75 transition duration-300 ease-in-out">
+                <i class="fas fa-volume-up mr-3"></i>
+                <span>Speak Text</span>
+            </button>
+            <button id="stopButton"
+                    class="flex-1 flex items-center justify-center bg-gradient-to-r from-red-500 to-orange-600 text-white font-bold py-4 px-8 rounded-xl shadow-lg hover:from-red-600 hover:to-orange-700 focus:outline-none focus:ring-4 focus:ring-red-300 focus:ring-opacity-75 transition duration-300 ease-in-out">
+                <i class="fas fa-stop mr-3"></i>
+                <span>Stop Speech</span>
+            </button>
+            <button id="clearButton"
+                    class="flex-1 flex items-center justify-center bg-gray-300 text-gray-800 font-bold py-4 px-8 rounded-xl shadow-md hover:bg-gray-400 focus:outline-none focus:ring-4 focus:ring-gray-200 focus:ring-opacity-75 transition duration-300 ease-in-out">
+                <i class="fas fa-times mr-3"></i>
+                <span>Clear All</span>
+            </button>
+        </div>
+
+        <div id="messageBox" class="message-box mt-5 text-sm text-gray-600">
+            </div>
     </div>
 
     <script src="script.js"></script>
 </body>
-
 </html>
